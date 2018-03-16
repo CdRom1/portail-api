@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 
 class AssoTypeController extends Controller
 {
+	public function __construct() {
+        // $this->middleware('auth:api', 'role:admin');
+    }
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -41,7 +45,11 @@ class AssoTypeController extends Controller
 	 */
 	public function show($id)
 	{
-		//
+		$type = AssoType::find($id);
+        if ($type)
+            return response()->json($type, 200);
+        else
+            return response()->json(["message" => "Impossible de trouver le type d'asso"], 404);
 	}
 
 	/**
@@ -53,7 +61,13 @@ class AssoTypeController extends Controller
 	 */
 	public function update(Request $request, $id)
 	{
-		//
+		$type = AssoType::find($id);
+
+        $type = AssoType::update($request->input());
+        if ($type)
+            return response()->json($type, 200);
+        else
+            return response()->json(["message" => "Impossible de modifier le type"], 500);
 	}
 
 	/**
@@ -64,6 +78,6 @@ class AssoTypeController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		// Voir ce qu'il faut faire, a priori pas de destroy.
 	}
 }
