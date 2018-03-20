@@ -82,6 +82,9 @@ class ReservationTypeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reservationType = ReservationType::find($id);
+        $reservationType->delete();
+
+        return response()->json(["message" => "Type de réservation supprimé"], 200);
     }
 }
