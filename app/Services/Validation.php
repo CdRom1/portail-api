@@ -14,7 +14,7 @@ class Validation
 	 * @param array $args
 	 * @return Validation
 	 */
-	public function make(Request $request, $args=[]){
+	public function make(Request $request, $args = []) {
 		$this->request = $request;
 		$this->args = is_array($args) ? $args : [$args];
 
@@ -25,7 +25,7 @@ class Validation
 	 * @param string $arg
 	 * @return Validation
 	 */
-	public function length($arg){
+	public function length($arg) {
 		$this->args['length'] = $arg;
 
 		return $this;
@@ -36,9 +36,9 @@ class Validation
 	 * @param $args
 	 * @return Validation
 	 */
-	public function __call($method, $args){
-		if($this->request->isMethod($method)) {
-			foreach ($args as $arg){
+	public function __call($method, $args) {
+		if ($this->request->isMethod($method)) {
+			foreach ($args as $arg) {
 				array_push($this->args, $arg);
 			}
 		}
@@ -50,7 +50,7 @@ class Validation
 	 * @param string $arg
 	 * @return Validation $this
 	 */
-	public function type($arg){
+	public function type($arg) {
 		$this->args['type'] = $arg;
 
 		return $this;
@@ -61,7 +61,7 @@ class Validation
 	 * @param string $fields
 	 * @return Validation
 	 */
-	public function unique($table, $fields){
+	public function unique($table, $fields) {
 		$this->args['unique'] = 'unique:'.$table.','.$fields;
 
 		return $this;
@@ -72,8 +72,8 @@ class Validation
 	 * @param string $field
 	 * @return Validation
 	 */
-	public function exists($table, $field){
-		array_push($this->args,'exists:'.$table.','.$field);
+	public function exists($table, $field) {
+		array_push($this->args, 'exists:'.$table.','.$field);
 
 		return $this;
 	}
@@ -81,17 +81,37 @@ class Validation
 	/**
 	 * @return Validation
 	 */
-	public function nullable(){
+	public function nullable() {
 		$this->args['nullable'] = 'nullable';
 
 		return $this;
 	}
 
 	/**
+	 * @param string $type
+	 * @return Validation
+	 */
+	public function between(string $type) {
+		$values = config("validation.$type");
+		$this->args['length'] = "between:".$values['min'].",".$values['max'];
+		return $this;
+	}
+
+	/**
+	 * @param string $type
+	 * @return Validation
+	 */
+	public function max(string $type) {
+		$this->args['length'] = 'max:'.config("validation.$type.max");
+		return $this;
+	}
+
+	/**
 	 * @return string
 	 */
-	public function get(){
+	public function get() {
 		return implode('|', array_values($this->args));
 	}
+
 
 }

@@ -13,7 +13,7 @@ class AssoTypeRequest extends FormRequest
 	 * @return bool
 	 */
 	public function authorize() {
-		return true;				// TODO : changer pour savoir si l'utilisateur à les droits
+		return true;                // TODO : changer pour savoir si l'utilisateur à les droits
 	}
 
 	/**
@@ -23,8 +23,8 @@ class AssoTypeRequest extends FormRequest
 	 */
 	public function rules() {
 		return [
-			'name' => Validation::make($this)->type('string')->length(validation_between('name'))->post('required')->get(),
-			'description' => Validation::make($this)->type('string')->length(validation_between('description'))->post('required')->get(),
+			'name'        => Validation::make($this)->type('string')->between('name')->post('required')->get(),
+			'description' => Validation::make($this)->type('string')->between('description')->post('required')->get(),
 		];
 	}
 }

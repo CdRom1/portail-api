@@ -13,7 +13,7 @@ class AssoRequest extends FormRequest
 	 * @return bool
 	 */
 	public function authorize() {
-		return true;				// TODO : changer pour savoir si l'utilisateur à les droits
+		return true;                // TODO : changer pour savoir si l'utilisateur à les droits
 	}
 
 	/**
@@ -23,43 +23,43 @@ class AssoRequest extends FormRequest
 	 */
 	public function rules() {
 		return [
-			'name' => Validation::make($this)
-						->type('string')
-						->length(validation_between('name'))
-						->unique('assos', 'name')
-						->post('required')
-						->get(),
-			'shortname' => Validation::make($this)
-						->type('string')
-						->length(validation_between('login'))
-						->unique('assos', 'shortname')
-						->post('required')
-						->get(),
-			'login' => Validation::make($this)
-						->type('string')
-						->length(validation_between('login'))
-						->unique('assos', 'login')
-						->post('required')
-						->get(),
-			'description' => Validation::make($this)
-						->type('string')
-						->length(validation_between('description'))
-						->post('required')
-						->get(),
+			'name'         => Validation::make($this)
+			                            ->type('string')
+			                            ->between('name')
+			                            ->unique('assos', 'name')
+			                            ->post('required')
+			                            ->get(),
+			'shortname'    => Validation::make($this)
+			                            ->type('string')
+			                            ->between('login')
+			                            ->unique('assos', 'shortname')
+			                            ->post('required')
+			                            ->get(),
+			'login'        => Validation::make($this)
+			                            ->type('string')
+			                            ->between('login')
+			                            ->unique('assos', 'login')
+			                            ->post('required')
+			                            ->get(),
+			'description'  => Validation::make($this)
+			                            ->type('string')
+			                            ->between('description')
+			                            ->post('required')
+			                            ->get(),
 			'type_asso_id' => Validation::make($this)
-						->type('integer')
-						->exists('assos_types', 'id')
-						->post('required')
-						->get(),
-			'parent_id' => Validation::make($this)
-						->type('integer')
-						->exists('assos', 'id')
-						->get(),
-			'user_id' => Validation::make($this)
-						->type('integer')
-						->exists('users', 'id')
-						->post('required')
-						->get(),
+			                            ->type('integer')
+			                            ->exists('assos_types', 'id')
+			                            ->post('required')
+			                            ->get(),
+			'parent_id'    => Validation::make($this)
+			                            ->type('integer')
+			                            ->exists('assos', 'id')
+			                            ->get(),
+			'user_id'      => Validation::make($this)
+			                            ->type('integer')
+			                            ->exists('users', 'id')
+			                            ->post('required')
+			                            ->get(),
 		];
 	}
 }
